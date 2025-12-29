@@ -1,6 +1,10 @@
 spring:
   application:
     name: user-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/userdb
+      database: userdb
   #  h2:
   #    console:
   #      enabled: true
@@ -11,19 +15,19 @@ spring:
   #    hibernate:
   #      ddl-auto: create
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/userdb?options=-c%20TimeZone=Asia/Kolkata
-    #this is nothing but POSTGRES_USER: hannan from docker compose.yml
-    username: hannan
-    password: hannan
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    properties:
-      hibernate.jdbc.time_zone: Asia/Kolkata
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/userdb?options=-c%20TimeZone=Asia/Kolkata
+#    #this is nothing but POSTGRES_USER: hannan from docker compose.yml
+#    username: hannan
+#    password: hannan
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    properties:
+#      hibernate.jdbc.time_zone: Asia/Kolkata
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: 8082

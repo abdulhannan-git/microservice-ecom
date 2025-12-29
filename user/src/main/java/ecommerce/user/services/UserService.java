@@ -66,11 +66,11 @@ public class UserService {
         );
     }
 
-    public Optional<UserResponse> fetchUser(Long id) {
-        return userRepository.findById(id).map(this::mapToUserResponseFromUser);
+    public Optional<UserResponse> fetchUser(String id) {
+        return userRepository.findById(String.valueOf(id)).map(this::mapToUserResponseFromUser);
     }
 
-    public boolean updateUser(Long id, UserRequest userRequest) {
+    public boolean updateUser(String id, UserRequest userRequest) {
         return userRepository.findById(id)
                 .map(user -> {
                     mapToUserFromUserRequest(user, userRequest);
