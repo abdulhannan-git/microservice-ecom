@@ -78,4 +78,8 @@ public class ProductService {
                     return true;
                 }).orElse(false);
     }
+
+    public Optional<ProductResponse> getProductById(String id) {
+        return productRepository.findByIdAndActiveTrue(Long.valueOf(id)).map(this::mapProductToProductResponse);
+    }
 }
