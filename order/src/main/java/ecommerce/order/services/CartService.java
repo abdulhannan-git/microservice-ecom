@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,8 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService {
 
-    //    private final UserRepository userRepository;
-//    private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final ProductServiceClient productServiceClient;
     private final UserServiceClient userServiceClient;
@@ -33,22 +30,36 @@ public class CartService {
         if (productResponse.getStockQuantity() < cartItemRequest.getQuantity()) return false;
 
 //        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
-        UserResponse userResponse = userServiceClient.getUserDetails(userId);
+        UserResponse userResponse = userServiceClient.findById(Long.valueOf(userId));
+
         if (userResponse == null) return false;
 //        if (userOpt.isEmpty()) return false;
 //        User user = userOpt.get();
 
+//        CartItem existingCartItem = cartRepository.findByUserIdAndProductId(userId, cartItemRequest.getProductId());
+//        if (existingCartItem != null) {
+//            existingCartItem.setQuantity(existingCartItem.getQuantity()+cartItemRequest.getQuantity());
+//            existingCartItem.setPrice(BigDecimal.valueOf(1000));
+//            cartRepository.save(existingCartItem);
+//        } else {
+//            CartItem cartItem = new CartItem();
+//            cartItem.setUserId(userId);
+//            cartItem.setQuantity(cartItemRequest.getQuantity());
+//            cartItem.setProductId(cartItemRequest.getProductId());
+//            cartItem.setPrice(BigDecimal.valueOf(1000));
+//            cartRepository.save(cartItem);
+//        }
         CartItem existingCartItem = cartRepository.findByUserIdAndProductId(userId, cartItemRequest.getProductId());
         if (existingCartItem != null) {
-            existingCartItem.setQuantity(existingCartItem.getQuantity());
-            existingCartItem.setPrice(BigDecimal.valueOf(1000));
+            existingCartItem.setQuantity(existingCartItem.getQuantity() + cartItemRequest.getQuantity());
+            existingCartItem.setPrice(productResponse.getPrice());
             cartRepository.save(existingCartItem);
         } else {
             CartItem cartItem = new CartItem();
             cartItem.setUserId(userId);
             cartItem.setQuantity(cartItemRequest.getQuantity());
             cartItem.setProductId(cartItemRequest.getProductId());
-            cartItem.setPrice(BigDecimal.valueOf(1000));
+            cartItem.setPrice(productResponse.getPrice());
             cartRepository.save(cartItem);
         }
         return true;

@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 public class UserServiceClientConfig {
 
     @Bean
-    @Lazy
     public UserServiceClient webUserClientInterface(WebClient.Builder webClientBuilder) {
         WebClient webClient = webClientBuilder
                 .baseUrl("http://user-service")

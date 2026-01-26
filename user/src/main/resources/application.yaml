@@ -53,3 +53,14 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: localhost
+
+logging:
+#  level:
+#    root: DEBUG
+#    com.ecommerce.user: TRACE
+  file:
+    name: logs/${spring.application.name}.log
+  logback:
+    rollingpolicy:
+      max-file-size: 5MB
+      max-history: 7

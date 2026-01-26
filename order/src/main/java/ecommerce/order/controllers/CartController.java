@@ -23,10 +23,10 @@ public class CartController {
             @RequestHeader("X-USER-ID") String userId,
             @RequestBody CartItemRequest cartItemRequest
     ) {
-        if (cartService.addItem(userId, cartItemRequest)) {
-            return new ResponseEntity<>("Item is added to the cart successfully", HttpStatus.OK);
+        if (!cartService.addItem(userId, cartItemRequest)) {
+            return new ResponseEntity<>("Product NOT FOUND OR User is NOT FOUND OR The Product is OUT OF STOCK!", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Product NOT FOUND OR User is NOT FOUND OR The Product is OUT OF STOCK!", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Item is added to the cart successfully", HttpStatus.OK);
     }
 
     @GetMapping
