@@ -10,21 +10,20 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import reactor.core.publisher.Mono;
 
 @Configuration
-public class ProductServiceClientConfig {
+public class UserServiceClientConfig {
 
     @Bean
     @Lazy
-    public ProductServiceClient restClientInterface(WebClient.Builder webClientBuilder) {
-
+    public UserServiceClient webUserClientInterface(WebClient.Builder webClientBuilder) {
         WebClient webClient = webClientBuilder
-                .baseUrl("http://product-service")
+                .baseUrl("http://user-service")
                 .defaultStatusHandler(HttpStatusCode::is4xxClientError,
                         (response) -> Mono.empty())
                 .build();
-        WebClientAdapter adapter = WebClientAdapter.create(webClient);
+        WebClientAdapter adapter = WebClientAdapter
+                                    .create(webClient);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory
-                .builderFor(adapter).build();
-        return factory.createClient(ProductServiceClient.class);
-
+                                    .builderFor(adapter).build();
+        return factory.createClient(UserServiceClient.class);
     }
 }
