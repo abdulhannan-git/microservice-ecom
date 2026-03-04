@@ -20,7 +20,7 @@ public class Order {
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
-    private Long userId;
+    private String userId;
 
     private BigDecimal totalAmount;
 

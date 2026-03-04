@@ -30,7 +30,7 @@ public class CartService {
         if (productResponse.getStockQuantity() < cartItemRequest.getQuantity()) return false;
 
 //        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
-        UserResponse userResponse = userServiceClient.findById(Long.valueOf(userId));
+        UserResponse userResponse = userServiceClient.findById(userId);
 
         if (userResponse == null) return false;
 //        if (userOpt.isEmpty()) return false;
